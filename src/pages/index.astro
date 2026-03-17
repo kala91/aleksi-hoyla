@@ -1,0 +1,91 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { contact, profile, projects, seo, skills } from '../data/content';
+
+const navItems = [
+  { label: 'Etusivu', href: '#etusivu' },
+  { label: 'Osaaminen', href: '#osaaminen' },
+  { label: 'Projektit', href: '#projektit' },
+  { label: 'Minusta', href: '#minusta' },
+  { label: 'Yhteystiedot', href: '#yhteystiedot' },
+];
+---
+
+<BaseLayout title={seo.title} description={seo.description} ogImage={seo.ogImage}>
+  <Header name={profile.name} nav={navItems} />
+
+  <main id="sisalto">
+    <section id="etusivu" class="hero">
+      <div class="container hero-grid">
+        <div>
+          <p class="eyebrow">Professional landing page</p>
+          <h1>{profile.name}</h1>
+          <p class="lead">{profile.title}</p>
+          <p>{profile.summary}</p>
+          <p>{profile.valueProposition}</p>
+          <div class="cta-row">
+            <a class="button" href={profile.ctaPrimary.href}>{profile.ctaPrimary.label}</a>
+            <a class="button button-secondary" href={profile.ctaSecondary.href}>{profile.ctaSecondary.label}</a>
+          </div>
+        </div>
+        <figure class="profile-card">
+          <img src="/images/profile-placeholder.svg" alt="Profiilikuvan placeholder" width="320" height="320" />
+          <figcaption>Vaihda tähän oma profiilikuva tiedostosta <code>public/images/</code>.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section id="osaaminen" class="section">
+      <div class="container">
+        <h2>Osaaminen</h2>
+        <div class="card-grid">
+          {skills.map((skill) => (
+            <article class="card">
+              <h3>{skill.title}</h3>
+              <p>{skill.description}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section id="projektit" class="section section-alt">
+      <div class="container">
+        <h2>Projektit</h2>
+        <div class="card-grid">
+          {projects.map((project) => (
+            <article class="card">
+              <h3>{project.name}</h3>
+              <p>{project.description}</p>
+              <p><strong>Rooli:</strong> {project.role}</p>
+              {project.link ? <p><a href={project.link}>Projektin linkki</a></p> : <p>Linkki lisätään myöhemmin.</p>}
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section id="minusta" class="section">
+      <div class="container narrow">
+        <h2>Minusta</h2>
+        <p>{profile.about}</p>
+      </div>
+    </section>
+
+    <section id="yhteystiedot" class="section section-alt">
+      <div class="container narrow">
+        <h2>Yhteystiedot</h2>
+        <ul class="contact-list">
+          <li><strong>Sähköposti:</strong> <a href={`mailto:${contact.email}`}>{contact.email}</a></li>
+          <li><strong>GitHub:</strong> <a href={contact.github}>GitHub-profiili</a></li>
+          <li><strong>LinkedIn:</strong> <a href={contact.linkedin}>LinkedIn-profiili</a></li>
+          <li><strong>CV:</strong> <a href={contact.cv}>Lataa CV (placeholder PDF)</a></li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>
