@@ -9,7 +9,8 @@ interface Props {
 
 const { title, description, ogImage = '/images/og-placeholder.svg' } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site).toString();
-const ogImageUrl = new URL(ogImage, Astro.site).toString();
+const asset = (path: string) => new URL(path.replace(/^\//, ''), new URL(import.meta.env.BASE_URL, Astro.site)).toString();
+const ogImageUrl = asset(ogImage);
 ---
 
 <!doctype html>
@@ -23,7 +24,7 @@ const ogImageUrl = new URL(ogImage, Astro.site).toString();
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImageUrl} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href={asset('/favicon.svg')} />
     <link rel="canonical" href={canonical} />
     <title>{title}</title>
   </head>

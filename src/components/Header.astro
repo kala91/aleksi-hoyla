@@ -10,11 +10,12 @@ interface Props {
 }
 
 const { name, nav } = Astro.props;
+const home = import.meta.env.BASE_URL;
 ---
 
 <header class="site-header">
   <div class="container header-inner">
-    <a class="brand" href="/">{name}</a>
+    <a class="brand" href={home}>{name}</a>
     <nav aria-label="Päänavigaatio">
       <ul class="nav-list">
         {nav.map((item) => (
